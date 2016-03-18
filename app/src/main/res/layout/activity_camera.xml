@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,10 +14,23 @@
         android:layout_height="match_parent"
         android:scaleType="center"
         android:src="@drawable/t_90" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="12dp">
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:src="@drawable/camera_close_selector"
+            android:layout_alignParentRight="true" />
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerInParent="true"
+            android:padding="12dp"
+            android:src="@drawable/camera_takephoto_selector"/>
+    </RelativeLayout>
+</RelativeLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:onClick="onCaptureClick"  />
-
-</FrameLayout>
