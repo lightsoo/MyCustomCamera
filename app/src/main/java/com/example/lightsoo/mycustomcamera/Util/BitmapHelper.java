@@ -4,8 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 /**
- * Created by LG on 2016-03-18.
+ * 파일 경로를 통해 디코딩을 한다.
  */
+
+
 public class BitmapHelper {
     public static Bitmap decodeSampledBitmap(String path, int reqWidth, int reqHeight) {
 

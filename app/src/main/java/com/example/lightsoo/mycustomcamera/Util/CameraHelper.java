@@ -16,6 +16,10 @@ public class CameraHelper {
         Camera camera = null;
         try {
             camera = Camera.open();
+//            Camera.Parameters parameters = camera.getParameters();
+            camera.setDisplayOrientation(90);
+//            parameters.setRotation(90);
+//            camera.setParameters(parameters);
         } catch (Exception e) {
             // Camera is not available or doesn't exist
             Log.d("getCamera failed", String.valueOf(e));
