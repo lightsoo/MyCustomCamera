@@ -1,6 +1,5 @@
 package com.example.lightsoo.mycustomcamera.Camera;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.hardware.Camera;
 import android.util.AttributeSet;
@@ -8,9 +7,6 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-/**
- * Created by LG on 2016-03-18.
- */
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback  {
 
     private static final String TAG = "CameraPreview";
@@ -47,7 +43,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         initCamera(holder);
     }
 
-    @SuppressLint("LongLogTag")
+
     private void initCamera(SurfaceHolder holder) {
         try {
             camera.setPreviewDisplay(holder);
@@ -57,23 +53,25 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
     }
 
+
+    //화면을 portrait로 고정해서 camera.s
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
         Log.e(TAG, "==surfaceChanged==");
-        try {
-            camera.stopPreview();
-        }catch (Exception e){
-
-        }
+//        try {
+//            camera.stopPreview();
+//        }catch (Exception e){
+//
+//        }
 
         //start preview with new settings
-        try {
-            camera.setPreviewDisplay(holder);
-            camera.startPreview();
-        } catch (Exception e) {
-            // intentionally left blank for a test
-        }
+//        try {
+//            camera.setPreviewDisplay(holder);
+//            camera.startPreview();
+//        } catch (Exception e) {
+//            // intentionally left blank for a test
+//        }
 
     }
 
@@ -82,8 +80,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
         Log.e(TAG, "==surfaceDestroyed==");
 
-        camera.release();
-        camera = null;
+//        camera.release();
+//        camera = null;
 //        camera.stopPreview();
 //        camera.release();
     }

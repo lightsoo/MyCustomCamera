@@ -17,7 +17,7 @@ public class CameraHelper {
         try {
             camera = Camera.open();
 //            Camera.Parameters parameters = camera.getParameters();
-            camera.setDisplayOrientation(90);
+//            camera.setDisplayOrientation(90);
 //            parameters.setRotation(90);
 //            camera.setParameters(parameters);
         } catch (Exception e) {

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.lightsoo.mycustomcamera.Camera.CameraActivity;
 import com.example.lightsoo.mycustomcamera.Util.BitmapHelper;
@@ -24,15 +25,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        String message = "Click the button below to start";
+        if (cameraNotDetected()) {
+            message = "No camera detected, clicking the button below will have unexpected behaviour.";
+        }
+
         btn_camera = (Button)findViewById(R.id.btn_customcamera);
         btn_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CameraActivity.class);
-                startActivity(intent);
-
+//                startActivity(intent);
+                startActivityForResult(intent, REQ_CAMERA_IMAGE);
             }
         });
+
+
     }
 
     private boolean cameraNotDetected() {
@@ -56,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayImage(String path) {
-        ImageView imageView = (ImageView) findViewById(R.id.image_view_captured_image);
-        imageView.setImageBitmap(BitmapHelper.decodeSampledBitmap(path, 300, 250));
+        ImageView imageView = (ImageView) findViewById(R.id.captured_image);
+        imageView.setImageBitmap(BitmapHelper.decodeSampledBitmap(path, 400, 450));
     }
 }

@@ -6,6 +6,7 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.io.File;
 import static com.example.lightsoo.mycustomcamera.Util.CameraHelper.getCameraInstance;
@@ -21,6 +22,7 @@ public class CameraActivity extends Activity implements Camera.PictureCallback {
     public static final String EXTRA_IMAGE_PATH = "com.fitta.lightsoo.MyCustomCamera.Camera.CameraActivity.EXTRA_IMAGE_PATH";
     private Camera camera;
 
+    ImageView imgCapture ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,18 @@ public class CameraActivity extends Activity implements Camera.PictureCallback {
         } else {
             finish();
         }
+
+        imgCapture = (ImageView)findViewById(R.id.onCaptureClick);
+        imgCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCaptureClick(v);
+            }
+        });
+
+
+
+
     }
     // Show the camera view on the activity
     private void initCameraPreview() {

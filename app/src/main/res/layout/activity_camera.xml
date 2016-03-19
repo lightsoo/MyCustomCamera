@@ -26,6 +26,7 @@
             android:src="@drawable/camera_close_selector"
             android:layout_alignParentRight="true" />
         <ImageView
+            android:id="@+id/onCaptureClick"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_centerInParent="true"
