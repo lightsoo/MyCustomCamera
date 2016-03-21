@@ -31,6 +31,7 @@
             android:layout_height="48dp"
             android:layout_centerInParent="true"
             android:padding="12dp"
+            android:onClick="onCaptureClick"
             android:src="@drawable/camera_takephoto_selector"/>
     </RelativeLayout>
 </RelativeLayout>

@@ -22,7 +22,7 @@ public class CameraActivity extends Activity implements Camera.PictureCallback {
     public static final String EXTRA_IMAGE_PATH = "com.fitta.lightsoo.MyCustomCamera.Camera.CameraActivity.EXTRA_IMAGE_PATH";
     private Camera camera;
 
-    ImageView imgCapture ;
+//    ImageView imgCapture ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +37,13 @@ public class CameraActivity extends Activity implements Camera.PictureCallback {
             finish();
         }
 
-        imgCapture = (ImageView)findViewById(R.id.onCaptureClick);
-        imgCapture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onCaptureClick(v);
-            }
-        });
+//        imgCapture = (ImageView)findViewById(R.id.onCaptureClick);
+//        imgCapture.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onCaptureClick(v);
+//            }
+//        });
 
 
 
@@ -83,6 +83,8 @@ public class CameraActivity extends Activity implements Camera.PictureCallback {
     // ALWAYS remember to release the camera when you are finished
     @Override
     protected void onPause() {
+        Log.e(TAG, "==onPause==");
+
         super.onPause();
         releaseCamera();
     }
