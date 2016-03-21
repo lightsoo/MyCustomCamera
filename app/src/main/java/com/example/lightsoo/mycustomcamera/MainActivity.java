@@ -3,7 +3,6 @@ package com.example.lightsoo.mycustomcamera;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -27,10 +26,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        String message = "Click the button below to start";
-        if (cameraNotDetected()) {
-            message = "No camera detected, clicking the button below will have unexpected behaviour.";
-        }
 
 //        btn_camera = (Button)findViewById(R.id.btn_customcamera);
 //        btn_camera.setOnClickListener(new View.OnClickListener() {
@@ -42,11 +37,6 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-
-    }
-
-    private boolean cameraNotDetected() {
-        return !getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
     }
 
     public void onUseCameraClick(View button) {
