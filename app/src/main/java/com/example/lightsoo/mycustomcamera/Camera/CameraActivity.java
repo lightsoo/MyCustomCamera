@@ -6,15 +6,15 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-
-import java.io.File;
-import static com.example.lightsoo.mycustomcamera.Util.CameraHelper.getCameraInstance;
-import static com.example.lightsoo.mycustomcamera.Util.CameraHelper.cameraAvailable;
-import static com.example.lightsoo.mycustomcamera.Util.MediaHelper.getOutputMediaFile;
-import static com.example.lightsoo.mycustomcamera.Util.MediaHelper.saveToFile;
 
 import com.example.lightsoo.mycustomcamera.R;
+
+import java.io.File;
+
+import static com.example.lightsoo.mycustomcamera.Util.CameraHelper.cameraAvailable;
+import static com.example.lightsoo.mycustomcamera.Util.CameraHelper.getCameraInstance;
+import static com.example.lightsoo.mycustomcamera.Util.MediaHelper.getOutputMediaFile;
+import static com.example.lightsoo.mycustomcamera.Util.MediaHelper.saveToFile;
 
 public class CameraActivity extends Activity implements Camera.PictureCallback {
 
@@ -44,10 +44,6 @@ public class CameraActivity extends Activity implements Camera.PictureCallback {
 //                onCaptureClick(v);
 //            }
 //        });
-
-
-
-
     }
     // Show the camera view on the activity
     private void initCameraPreview() {

@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn_customcamera"
+        android:onClick="onUseCameraClick"
         android:text="카메라실행"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />

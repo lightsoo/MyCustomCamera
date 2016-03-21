@@ -35,6 +35,10 @@ public class MediaHelper {
             }
         }
 
+
+//        ContentValues values = new ContentValues();
+//        values.put(MediaStore.Images.Media.ORIENTATION,90);
+
         // Create a media file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         return new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
