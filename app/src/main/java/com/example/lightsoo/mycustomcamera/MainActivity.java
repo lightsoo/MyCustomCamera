@@ -60,10 +60,11 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQ_CAMERA_IMAGE && resultCode == RESULT_OK) {
             String imgPath = data.getStringExtra(CameraActivity.EXTRA_IMAGE_PATH);
             Log.i("Got image path: " + imgPath);
-            //이미지뷰에 설정해서 출력해주는데
-            displayImage(imgPath);
+
             //이미지를 앨범에 저장하는게 필요.
             saveImage(imgPath, MainActivity.this);
+            //이미지뷰에 설정해서 출력해주는데
+            displayImage(imgPath);
 
         } else if (requestCode == REQ_CAMERA_IMAGE && resultCode == RESULT_CANCELED) {
             Log.i("User didn't take an image");
@@ -78,13 +79,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void saveImage(final String filePath, final Context context){
         ContentValues values = new ContentValues();
-
+        values.put(MediaStore.Images.Media.ORIENTATION,90);
         values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
         values.put(MediaStore.MediaColumns.DATA, filePath);
 
         context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-
-
     }
 }

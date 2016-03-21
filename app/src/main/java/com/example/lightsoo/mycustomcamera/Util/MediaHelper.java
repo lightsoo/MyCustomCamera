@@ -22,8 +22,9 @@ public class MediaHelper {
         final String TAG = "CameraPreview";
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
-
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "fitta");
+        //파일 저장 디렉토리명
+        File mediaStorageDir =
+                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Fitta");
         // This location works best if you want the created images to be shared
         // between applications and persist after your app has been uninstalled.
 
@@ -34,10 +35,6 @@ public class MediaHelper {
                 return null;
             }
         }
-
-
-//        ContentValues values = new ContentValues();
-//        values.put(MediaStore.Images.Media.ORIENTATION,90);
 
         // Create a media file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
