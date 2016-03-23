@@ -3,8 +3,8 @@
     package="com.example.lightsoo.mycustomcamera">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.Camera"></uses-feature>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -25,6 +25,7 @@
         <activity
             android:name=".Camera.CameraActivity"
             android:label="@string/title_activity_camera"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
         </activity>
     </application>

@@ -66,14 +66,13 @@ public class MainActivity extends AppCompatActivity {
         imageView.setImageBitmap(BitmapHelper.decodeSampledBitmap(path, 400, 450));
     }
 
-
+    //이미지 설정 후 갤러리 저장
     private void saveImage(final String filePath, final Context context){
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.ORIENTATION,90);
         values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
         values.put(MediaStore.MediaColumns.DATA, filePath);
-
         context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
     }
 }

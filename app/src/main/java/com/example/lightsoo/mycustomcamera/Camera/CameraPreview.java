@@ -40,11 +40,19 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
 
+    //surface생성시 카메라의 인스턴스를 받아온후 preview를 출력할 위치 설정
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         android.util.Log.d(TAG,"==surfaceCreated==");
 //        Log.e(TAG, "==surfaceCreated==");
-        initCamera(holder);
+        try {
+            camera.setPreviewDisplay(holder);
+            camera.startPreview();
+        } catch (Exception e) {
+            Log.d("Error setting camera preview", e);
+        }
+
+//        initCamera(holder);
     }
 
 
@@ -53,6 +61,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             camera.setPreviewDisplay(holder);
             camera.startPreview();
         } catch (Exception e) {
+            camera.release();
+            camera =null;
             Log.d("Error setting camera preview", e);
         }
     }

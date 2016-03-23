@@ -3,6 +3,7 @@ package com.example.lightsoo.mycustomcamera.Camera;
 import android.app.Activity;
 import android.content.Intent;
 import android.hardware.Camera;
+import android.hardware.Camera.PictureCallback;;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,12 +17,12 @@ import static com.example.lightsoo.mycustomcamera.Util.CameraHelper.getCameraIns
 import static com.example.lightsoo.mycustomcamera.Util.MediaHelper.getOutputMediaFile;
 import static com.example.lightsoo.mycustomcamera.Util.MediaHelper.saveToFile;
 
-public class CameraActivity extends Activity implements Camera.PictureCallback {
+public class CameraActivity extends Activity implements PictureCallback {
 
     private static final String TAG = "CameraActivity";
     public static final String EXTRA_IMAGE_PATH = "com.fitta.lightsoo.MyCustomCamera.Camera.CameraActivity.EXTRA_IMAGE_PATH";
     private Camera camera;
-
+    private CameraPreview cameraPreview;
 //    ImageView imgCapture ;
 
     @Override
@@ -48,6 +49,7 @@ public class CameraActivity extends Activity implements Camera.PictureCallback {
     // Show the camera view on the activity
     private void initCameraPreview() {
         CameraPreview cameraPreview = (CameraPreview) findViewById(R.id.camera_preview);
+//        cameraPreview = (CameraPreview) findViewById(R.id.camera_preview);
         cameraPreview.init(camera);
     }
 
@@ -79,10 +81,12 @@ public class CameraActivity extends Activity implements Camera.PictureCallback {
     // ALWAYS remember to release the camera when you are finished
     @Override
     protected void onPause() {
-        Log.e(TAG, "==onPause==");
-
         super.onPause();
-        releaseCamera();
+        Log.e(TAG, "==onPause==");
+        if (camera != null) {
+            camera.release();
+            camera = null;
+        }
     }
 
     private void releaseCamera() {
@@ -92,4 +96,17 @@ public class CameraActivity extends Activity implements Camera.PictureCallback {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG, "==onResume==");
+//        if(camera==null){
+//            camera = getCameraInstance();
+//            if (cameraAvailable(camera)) {
+//                initCameraPreview();
+//            } else {
+//                finish();
+//            }
+//        }
+    }
 }
