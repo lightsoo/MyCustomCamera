@@ -4,35 +4,98 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.lightsoo.mycustomcamera.Camera.CameraPreview
-        android:id="@+id/camera_preview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <ImageView
+    <RelativeLayout
+        android:id="@+id/take_photo_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="center"
-        android:src="@drawable/t_90" />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:padding="12dp">
+        android:visibility="visible">
+
+        <com.example.lightsoo.mycustomcamera.Camera.CameraPreview
+            android:id="@+id/cameraPreview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="12dp"
-            android:src="@drawable/camera_close_selector"
-            android:layout_alignParentRight="true" />
-        <ImageView
-            android:id="@+id/onCaptureClick"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_centerInParent="true"
-            android:padding="12dp"
-            android:onClick="onCaptureClick"
-            android:src="@drawable/camera_takephoto_selector"/>
+            android:id="@+id/clothes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_launcher"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:padding="12dp">
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="12dp"
+                android:src="@drawable/camera_close_selector"
+                android:onClick="close"
+                android:layout_alignParentRight="true" />
+
+            <ImageView
+                android:id="@+id/takePhoto"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerInParent="true"
+                android:padding="12dp"
+                android:onClick="takePhoto"
+                android:src="@drawable/camera_takephoto_selector"/>
+        </RelativeLayout>
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/photo_result_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:id="@+id/capturedImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="capturedIMAGE" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/relativeLayout">
+            <Button
+                android:id="@+id/btn_retake"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:onClick="reTakePhoto"
+                android:text="다시촬영"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/btn_ok"
+                android:layout_toStartOf="@+id/btn_ok"
+                android:layout_marginRight="56dp"
+                android:layout_marginEnd="56dp" />
+
+            <Button
+                android:id="@+id/btn_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:text="확인"
+                android:layout_marginRight="49dp"
+                android:layout_marginEnd="49dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
 </RelativeLayout>
 

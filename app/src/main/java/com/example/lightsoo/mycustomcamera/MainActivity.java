@@ -7,14 +7,13 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.lightsoo.mycustomcamera.Camera.CameraActivity;
 import com.example.lightsoo.mycustomcamera.Util.BitmapHelper;
-import com.example.lightsoo.mycustomcamera.Util.Log;
-
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActy";
@@ -26,17 +25,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        btn_camera = (Button)findViewById(R.id.btn_customcamera);
-//        btn_camera.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
-////                startActivity(intent);
-//                startActivityForResult(intent, REQ_CAMERA_IMAGE);
-//            }
-//        });
-
     }
 
     public void onUseCameraClick(View button) {
@@ -49,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         //카메라 촬영이후 이미지의 경로를 준다,
         if (requestCode == REQ_CAMERA_IMAGE && resultCode == RESULT_OK) {
             String imgPath = data.getStringExtra(CameraActivity.EXTRA_IMAGE_PATH);
-            Log.i("Got image path: " + imgPath);
+            Log.i(TAG, "Got image path: " + imgPath);
 
             //이미지를 앨범에 저장하는게 필요.
             saveImage(imgPath, MainActivity.this);
@@ -57,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             displayImage(imgPath);
 
         } else if (requestCode == REQ_CAMERA_IMAGE && resultCode == RESULT_CANCELED) {
-            Log.i("User didn't take an image");
+            Log.i(TAG,"User didn't take an image");
         }
     }
 

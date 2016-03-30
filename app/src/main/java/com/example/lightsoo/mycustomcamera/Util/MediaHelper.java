@@ -16,7 +16,6 @@ import java.util.Locale;
  */
 public class MediaHelper {
 
-
     public static File getOutputMediaFile() {
 
         final String TAG = "CameraPreview";
