@@ -1,9 +1,12 @@
 package com.example.lightsoo.mycustomcamera.Camera;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.hardware.Camera;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -17,6 +20,7 @@ import com.example.lightsoo.mycustomcamera.Camera.CameraPreview.OnCameraStatusLi
 import com.example.lightsoo.mycustomcamera.R;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import static com.example.lightsoo.mycustomcamera.Util.MediaHelper.getOutputMediaFile;
 import static com.example.lightsoo.mycustomcamera.Util.MediaHelper.saveToFile;
@@ -27,12 +31,13 @@ public class CameraActivity extends Activity implements OnCameraStatusListener {
 
     private static final String TAG = "CameraActivity";
     public static final String EXTRA_IMAGE_PATH = "com.fitta.lightsoo.MyCustomCamera.Camera.CameraActivity.EXTRA_IMAGE_PATH";
-    private Camera camera;
     private CameraPreview cameraPreview;
     private ImageView Clothes, capturedImage;
-
+    private File mSaveFile;
+    private String cameraPath;
     RelativeLayout takePhotoLayout, photoResultLayout;
 
+    private static final int REQUEST_CROP = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,26 +47,16 @@ public class CameraActivity extends Activity implements OnCameraStatusListener {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_camera);
-//        setResult(RESULT_CANCELED);
-
-
         initCameraPreview();
-//        if (cameraAvailable(camera)) {
-//            initCameraPreview();
-//        } else {
-//            Log.d(TAG, "finish()");
-//            finish();
-//        }
-
     }
 
     // Show the camera view on the activity
     private void initCameraPreview() {
         Log.d(TAG, "===initCameraPreview()===");
-        takePhotoLayout =(RelativeLayout)findViewById(R.id.take_photo_layout);
-        photoResultLayout = (RelativeLayout)findViewById(R.id.photo_result_layout);
-        capturedImage = (ImageView) findViewById(R.id.capturedImage);
-        cameraPreview =(CameraPreview)findViewById(R.id.cameraPreview);
+        takePhotoLayout =(RelativeLayout)findViewById(R.id.take_photo_layout);//기본화면
+        photoResultLayout = (RelativeLayout)findViewById(R.id.photo_result_layout);//촬영결과 화면
+        capturedImage = (ImageView) findViewById(R.id.capturedImage);//사진찍는 버튼의 이미지뷰
+        cameraPreview =(CameraPreview)findViewById(R.id.cameraPreview); //카메라 surfaceview
         cameraPreview.setOnCameraStatusListener(this);
 
         Clothes = (ImageView)findViewById(R.id.clothes);
@@ -87,7 +82,6 @@ public class CameraActivity extends Activity implements OnCameraStatusListener {
 
     //카메라에서 촬영버튼 눌럿을때, 화면 전환!
     private void showPhotoResultLayout(){
-
         Log.d(TAG, "===showPhotoResultLayout()===");
         //카메라 촬영 callback()
         takePhotoLayout.setVisibility(View.GONE);
@@ -98,47 +92,60 @@ public class CameraActivity extends Activity implements OnCameraStatusListener {
     //단순히 화면 전환만 되고있어.
     public void takePhoto(View view) {
         Log.d(TAG, "===takePhoto()===");
-        // Take a picture with a callback when the photo has been created
-        // Here you can add callbacks if you want to give feedback when the picture is being taken
-//        camera.takePicture(null, null, this);
         if(cameraPreview != null){
             cameraPreview.takePicture();
         }
     }
 
-
-    //사진이 찍힌이후 동작
-//    @Override
-//    public void onPictureTaken(byte[] data, Camera camera) {
-//        Log.d(TAG,"Picture taken");
-//        String path = savePictureToFileSystem(data);
-//        Glide.with(getApplicationContext())
-//                .load(path)
-//                .crossFade()
-//                .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                .skipMemoryCache(true)
-//                .into(capturedImage);
-//
-////        setResult(path);
-////        finish();
-//    }
     @Override
     public void onCameraStopped(byte[] data) {
         Log.i("TAG", "===onCameraStopped===");
+        //지정해둔 디렉토리에 현재 시간으로 파일객체 생성
+        mSaveFile = getOutputMediaFile();
+        //파일저장
+        saveToFile(data, mSaveFile);
+        //만든 파일의 절대 경로
+        cameraPath = savePictureToFileSystem(data);
+        Log.d(TAG, "cameraPath : " + cameraPath);
 
-        File file = getOutputMediaFile();
-        saveToFile(data, file);
-        String path = savePictureToFileSystem(data);
         Glide.with(getApplicationContext())
-                .load(path)
+                .load(cameraPath)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .into(capturedImage);
         showPhotoResultLayout();
-//        showCropperLayout();
     }
 
+    //사진촬영 이후 결과화면에서 확인 누른 다면 이후, 사진 크롭 처리로 이동할 함수
+    public void cropImage(View button){
+
+        try {
+            String url = MediaStore.Images.Media.insertImage(getContentResolver(), cameraPath, "카메라 이미지", "기존 이미지");
+            Uri photouri = Uri.parse(url);
+            //ContentResolver가 처리할수있는 value들을 저장하는데 사용
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.ORIENTATION, 90);
+            //뭔지 잘모르겟지만, URL의 value로 대체한다
+            getContentResolver().update(photouri, values, null, null);
+
+
+            if(photouri != null){
+                Intent photoPickerIntent = new Intent(
+                        "com.android.camera.action.CROP", photouri);
+                photoPickerIntent.putExtra("scale", false);
+                photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mSaveFile));
+                photoPickerIntent.putExtra("outputFormat",
+                        Bitmap.CompressFormat.JPEG.toString());
+                startActivityForResult(photoPickerIntent, REQUEST_CROP);
+
+            }
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     private static String savePictureToFileSystem(byte[] data) {
         File file = getOutputMediaFile();
@@ -151,7 +158,25 @@ public class CameraActivity extends Activity implements OnCameraStatusListener {
         intent.putExtra(EXTRA_IMAGE_PATH, path);
         setResult(RESULT_OK, intent);
     }
+
     public void close(View view) {
         finish();
+    }
+
+
+    //crop이미지 처리이후에 reqCode를 통해서 CROP처리된 이미지를 받는다!!!
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //액티비티 결과가 이상는경우
+        if(resultCode != RESULT_OK){return;}
+        switch (requestCode){
+            //여기서 이미지 처리된걸 받아온다
+            case  REQUEST_CROP :
+                Log.d(TAG, "REQUEST_CROP");
+
+                break;
+        }
+
     }
 }
